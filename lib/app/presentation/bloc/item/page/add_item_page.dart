@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inventory/app/presentation/constants/app_color.dart';
 import '../../../../core/models/item.dart';
+import '../../category/category_bloc.dart';
 import '../../category/category_event.dart';
 import '../../category/category_state.dart';
+import '../../supplier/supplier_bloc.dart';
 import '../item_bloc.dart';
-import '../../category/category_bloc.dart';
 import '../item_event.dart';
 
 class AddItemPage extends StatefulWidget {
+  const AddItemPage({super.key});
+
   @override
   _AddItemPageState createState() => _AddItemPageState();
 }
@@ -22,11 +25,14 @@ class _AddItemPageState extends State<AddItemPage> {
   final TextEditingController _priceController = TextEditingController();
 
   int? _selectedCategoryId;
+  int? _selectedSupplierId;
 
   @override
   void initState() {
     super.initState();
+    // Fetch categories and suppliers
     context.read<CategoryBloc>().add(FetchCategory());
+    context.read<SupplierBloc>().add(FetchSupplier());
   }
 
   @override
@@ -46,7 +52,7 @@ class _AddItemPageState extends State<AddItemPage> {
         stok: int.parse(_stockController.text),
         harga: double.parse(_priceController.text),
         kategoriId: _selectedCategoryId ?? 1,
-        supplierId: 1,
+        supplierId: _selectedSupplierId ?? 1,
       );
 
       context.read<ItemBloc>().add(CreateItem(newItem));
@@ -59,7 +65,23 @@ class _AddItemPageState extends State<AddItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Item'),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            size: 22.sp,
+            color: AppColor.white,
+          ),
+        ),
+        title: Text(
+          'Add New Item',
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: AppColor.white,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -147,6 +169,8 @@ class _AddItemPageState extends State<AddItemPage> {
                 },
               ),
               SizedBox(height: 16.h),
+
+              // Category Dropdown
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   if (state is CategoryLoading) {
@@ -162,7 +186,6 @@ class _AddItemPageState extends State<AddItemPage> {
                         ),
                       ),
                       dropdownColor: AppColor.secondary,
-                      // Background color
                       items: state.categories.map((category) {
                         return DropdownMenuItem<int>(
                           value: category.id,
@@ -185,7 +208,48 @@ class _AddItemPageState extends State<AddItemPage> {
                   }
                 },
               ),
+              SizedBox(height: 16.h),
+
+              // Supplier Dropdown
+              BlocBuilder<SupplierBloc, SupplierState>(
+                builder: (context, state) {
+                  if (state is SupplierLoading) {
+                    return const CircularProgressIndicator();
+                  } else if (state is SupplierLoaded) {
+                    return DropdownButtonFormField<int>(
+                      value: _selectedSupplierId,
+                      decoration: InputDecoration(
+                        labelText: 'Pilih Supplier',
+                        labelStyle: TextStyle(
+                          color: AppColor.white,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      dropdownColor: AppColor.secondary,
+                      items: state.suppliers.map((supplier) {
+                        return DropdownMenuItem<int>(
+                          value: supplier.id,
+                          child: Text(
+                            supplier.namaSupplier,
+                            style: TextStyle(color: AppColor.white),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedSupplierId = value;
+                        });
+                      },
+                      validator: (value) =>
+                          value == null ? 'Please select a supplier' : null,
+                    );
+                  } else {
+                    return Text('Failed to load suppliers');
+                  }
+                },
+              ),
               SizedBox(height: 24.h),
+
               ElevatedButton(
                 onPressed: _addItem,
                 child: Text('Add Item'),

@@ -55,5 +55,15 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
         emit(ItemError("Failed to delete item: ${e.toString()}"));
       }
     });
+
+    on<SearchItems>((event, emit) async {
+      emit(ItemLoading());
+      try {
+        final items = await itemRepository.searchItems(event.query);
+        emit(ItemLoaded(items));
+      } catch (e) {
+        emit(ItemError('Failed to search items'));
+      }
+    });
   }
 }

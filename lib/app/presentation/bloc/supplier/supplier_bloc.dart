@@ -11,6 +11,15 @@ abstract class SupplierEvent extends Equatable {
 
 class FetchSupplier extends SupplierEvent {}
 
+class CreateSupplier extends SupplierEvent {
+  final Supplier supplier;
+
+  CreateSupplier(this.supplier);
+
+  @override
+  List<Object?> get props => [supplier];
+}
+
 // State
 abstract class SupplierState extends Equatable {
   @override
@@ -50,7 +59,17 @@ class SupplierBloc extends Bloc<SupplierEvent, SupplierState> {
         final suppliers = await supplierRepository.fetchSuppliers();
         emit(SupplierLoaded(suppliers));
       } catch (e) {
-        emit(SupplierError("Failed to fetch suppliers: ${e.toString()}"));
+        emit(SupplierError("error: ${e.toString()}"));
+      }
+    });
+
+    on<CreateSupplier>((event, emit) async {
+      emit(SupplierLoading());
+      try {
+        await supplierRepository.createSupplier(event.supplier);
+        add(FetchSupplier());
+      } catch (e) {
+        emit(SupplierError('Failed to create supplier: ${e.toString()}'));
       }
     });
   }

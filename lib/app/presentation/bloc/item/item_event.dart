@@ -38,3 +38,9 @@ class DeleteItem extends ItemEvent {
   @override
   List<Object> get props => [itemId];
 }
+
+class SearchItems extends ItemEvent {
+  final String query;
+
+  SearchItems(this.query);
+}

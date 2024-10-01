@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inventory/app/presentation/bloc/item/page/add_item_page.dart';
 import 'package:inventory/app/presentation/bloc/item/page/edit_item_page.dart';
+import 'package:inventory/app/presentation/bloc/item/page/widgets/search_item_card.dart';
 
 import '../../../../core/models/category.dart';
 import '../../../../core/models/item.dart';
@@ -14,7 +15,9 @@ import '../item_event.dart';
 import '../item_state.dart';
 
 class ItemPage extends StatelessWidget {
-  const ItemPage({super.key});
+  ItemPage({super.key});
+
+  final TextEditingController itemController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,18 @@ class ItemPage extends StatelessWidget {
                     icon: Icon(
                       Icons.arrow_back,
                       color: AppColor.white,
+                    ),
+                  ),
+                  Expanded(
+                    child: SearchItemCard(
+                      ItemController: itemController,
+                      onSearch: (String? query) {
+                        if (query != null && query.isNotEmpty) {
+                          context.read<ItemBloc>().add(SearchItems(query));
+                        } else {
+                          context.read<ItemBloc>().add(FetchItems());
+                        }
+                      },
                     ),
                   ),
                 ],

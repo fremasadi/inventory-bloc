@@ -1,10 +1,10 @@
 class Supplier {
-  final int id;
+  final int? id;
   final String namaSupplier;
   final String kontakSupplier;
 
   Supplier({
-    required this.id,
+    this.id,
     required this.namaSupplier,
     required this.kontakSupplier,
   });

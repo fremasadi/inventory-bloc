@@ -3,11 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../constants/app_color.dart';
 
-class SearchCard extends StatelessWidget {
-  final TextEditingController searchController;
+class SearchItemCard extends StatelessWidget {
+  final TextEditingController ItemController;
   final Function(String?) onSearch; // Change to accept String?
 
-  SearchCard({required this.searchController, required this.onSearch});
+  const SearchItemCard(
+      {super.key, required this.ItemController, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class SearchCard extends StatelessWidget {
               border: Border.all(color: AppColor.white, width: 2.w),
             ),
             child: TextField(
-              controller: searchController,
+              controller: ItemController,
               decoration: InputDecoration(
                 hintText: 'Search categories',
                 hintStyle: TextStyle(color: AppColor.grey),
@@ -37,8 +38,8 @@ class SearchCard extends StatelessWidget {
         IconButton(
           onPressed: () {
             String? query =
-                searchController.text.isEmpty ? null : searchController.text;
-            onSearch(query); // Pass nullable string
+                ItemController.text.isEmpty ? null : ItemController.text;
+            onSearch(query);
           },
           icon: Icon(
             Icons.search,

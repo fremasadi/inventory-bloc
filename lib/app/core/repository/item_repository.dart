@@ -69,4 +69,15 @@ class ItemRepository {
       throw Exception('Failed to delete item');
     }
   }
+
+  Future<List<Item>> searchItems(String query) async {
+    final response = await http.get(Uri.parse('$apiUrl/items?search=$query'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body)["data"];
+      return jsonResponse.map((item) => Item.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to search items');
+    }
+  }
 }

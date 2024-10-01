@@ -67,71 +67,6 @@ class CategoryListItem extends StatelessWidget {
           },
         );
       },
-      onTap: () {
-        showModalBottomSheet(
-          backgroundColor: AppColor.primary,
-          context: context,
-          builder: (BuildContext context) {
-            final TextEditingController editCategoryController =
-                TextEditingController(text: category.namaKategori);
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Edit Kategory',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.white,
-                    ),
-                  ),
-                  SizedBox(height: 16.sp),
-                  TextField(
-                    controller: editCategoryController,
-                    decoration: InputDecoration(
-                      labelText: 'Nama Kategory',
-                      labelStyle: TextStyle(color: AppColor.white),
-                    ),
-                    style: TextStyle(color: AppColor.white),
-                  ),
-                  SizedBox(height: 16.sp),
-                  ElevatedButton(
-                    onPressed: () {
-                      String updatedCategoryName = editCategoryController.text;
-                      if (updatedCategoryName.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Nama kategori tidak boleh kosong"),
-                          ),
-                        );
-                        return;
-                      }
-                      Category updatedCategory = Category(
-                        id: category.id,
-                        namaKategori: updatedCategoryName,
-                      );
-                      onEdit(updatedCategory);
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.green,
-                    ),
-                    child: Text(
-                      'Update',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: AppColor.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
       child: ListTile(
         title: Text(
           category.namaKategori,
@@ -143,6 +78,80 @@ class CategoryListItem extends StatelessWidget {
         leading: Icon(
           Icons.category,
           color: AppColor.yellow,
+        ),
+        trailing: IconButton(
+          onPressed: () {
+            showModalBottomSheet(
+              backgroundColor: AppColor.primary,
+              context: context,
+              builder: (BuildContext context) {
+                final TextEditingController editCategoryController =
+                    TextEditingController(text: category.namaKategori);
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Edit Kategory',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.white,
+                        ),
+                      ),
+                      SizedBox(height: 16.sp),
+                      TextField(
+                        controller: editCategoryController,
+                        decoration: InputDecoration(
+                          labelText: 'Nama Kategory',
+                          labelStyle: TextStyle(color: AppColor.white),
+                        ),
+                        style: TextStyle(color: AppColor.white),
+                      ),
+                      SizedBox(height: 16.sp),
+                      ElevatedButton(
+                        onPressed: () {
+                          String updatedCategoryName =
+                              editCategoryController.text;
+                          if (updatedCategoryName.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text("Nama kategori tidak boleh kosong"),
+                              ),
+                            );
+                            return;
+                          }
+                          Category updatedCategory = Category(
+                            id: category.id,
+                            namaKategori: updatedCategoryName,
+                          );
+                          onEdit(updatedCategory);
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.green,
+                        ),
+                        child: Text(
+                          'Update',
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: AppColor.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+          icon: Icon(
+            Icons.edit,
+            size: 22.sp,
+            color: AppColor.green,
+          ),
         ),
       ),
     );

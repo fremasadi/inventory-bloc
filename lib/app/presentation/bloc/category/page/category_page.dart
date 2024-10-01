@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/app/presentation/bloc/category/category_bloc.dart';
 import 'package:inventory/app/presentation/bloc/category/page/widgets/add_category_button.dart';
-import 'package:inventory/app/presentation/bloc/category/page/widgets/search_card.dart';
+import 'package:inventory/app/presentation/bloc/category/page/widgets/search_category_card.dart';
 import 'package:inventory/app/presentation/constants/app_color.dart';
 import '../category_event.dart';
 import '../category_state.dart';
@@ -39,7 +39,7 @@ class CategoryPage extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: SearchCard(
+                    child: SearchCategoryCard(
                       searchController: searchController,
                       onSearch: (String? query) {
                         if (query == null) {
@@ -59,7 +59,6 @@ class CategoryPage extends StatelessWidget {
               child: BlocListener<CategoryBloc, CategoryState>(
                 listener: (context, state) {
                   if (state is CategoryError) {
-                    // Show Snackbar for errors
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(state.message),
@@ -87,8 +86,6 @@ class CategoryPage extends StatelessWidget {
                                   .add(EditCategory(updatedCategory));
                             },
                             onDelete: (categoryId) {
-                              print(
-                                  "Deleting category with ID: $categoryId"); // Log ID before delete
                               context
                                   .read<CategoryBloc>()
                                   .add(DeleteCategory(categoryId));
@@ -97,10 +94,9 @@ class CategoryPage extends StatelessWidget {
                         },
                       );
                     } else if (state is CategoryError) {
-                      // Optionally, handle any special state for error UI here
-                      return const Center(child: Text('No Data'));
+                      return const Center(child: Text('Tidak Ada Data'));
                     }
-                    return const Center(child: Text('No Data'));
+                    return const Center(child: Text('Tidak Ada Data'));
                   },
                 ),
               ),

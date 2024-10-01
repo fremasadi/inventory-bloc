@@ -27,11 +27,34 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        padding: EdgeInsets.all(8.sp),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColor.white,
+        ),
+        child: IconButton(
+          onPressed: () {},
+          icon: Icon(
+            Icons.add,
+            size: 28.sp,
+            color: AppColor.secondary,
+          ),
+        ),
+      ),
       appBar: AppBar(
-        title: Icon(
+        leading: Icon(
           Icons.inventory,
           size: 32.sp,
           color: AppColor.yellow,
+        ),
+        title: Text(
+          'Dashboard',
+          style: TextStyle(
+            fontSize: 16.sp,
+            color: AppColor.white,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         actions: [
           IconButton(
@@ -113,45 +136,6 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Dashboard',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: AppColor.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 12.sp, horizontal: 26.sp),
-                    decoration: BoxDecoration(
-                      color: AppColor.blueLight,
-                      borderRadius: BorderRadius.circular(16.sp),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.filter_alt,
-                          color: AppColor.white,
-                        ),
-                        SizedBox(
-                          width: 6.w,
-                        ),
-                        Text(
-                          'Filter',
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: AppColor.white,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
               Container(
                 margin: EdgeInsets.only(top: 22.sp),
                 padding: EdgeInsets.all(8.sp),
