@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:inventory/app/data/models/supplier.dart';
+import '../../../core/models/supplier.dart';
 import '../../../core/repository/supplier_repository.dart';
 
 // Event

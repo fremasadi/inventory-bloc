@@ -1,35 +1,44 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../data/models/category.dart';
-import '../../../data/models/item.dart';
-import '../../../data/models/supplier.dart';
+import '../../../core/models/category.dart';
+import '../../../core/models/item.dart';
+import '../../../core/models/supplier.dart';
 
-abstract class DataState extends Equatable {
+// Item States
+abstract class ItemState extends Equatable {
+  const ItemState();
+
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-class DataInitial extends DataState {}
+class ItemInitial extends ItemState {}
 
-class DataLoading extends DataState {}
+class ItemLoading extends ItemState {}
 
-class DataLoaded extends DataState {
+class ItemLoaded extends ItemState {
   final List<Item> items;
-  final List<Category> categories;
-  final List<Supplier> suppliers;
 
-  DataLoaded(
-      {required this.items, required this.categories, required this.suppliers});
+  const ItemLoaded(this.items);
 
   @override
-  List<Object> get props => [items, categories, suppliers];
+  List<Object?> get props => [items];
 }
 
-class DataError extends DataState {
+class ItemError extends ItemState {
   final String message;
 
-  DataError({required this.message});
+  const ItemError(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
+}
+
+class ItemSuccess extends ItemState {
+  final String message;
+
+  const ItemSuccess(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:inventory/app/presentation/bloc/item/page/item_page.dart';
+import 'package:inventory/app/presentation/bloc/supplier/page/supplier_page.dart';
 import 'package:inventory/app/presentation/constants/app_color.dart';
-import 'package:inventory/app/presentation/page/category_page.dart';
-import 'package:inventory/app/presentation/page/widgets/cards/horizontal_card.dart';
+import 'package:inventory/app/presentation/bloc/category/page/category_page.dart';
+import 'package:inventory/app/presentation/bloc/category/page/widgets/horizontal_card.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../bloc/category/category_bloc.dart';
-import '../bloc/item/item_bloc.dart';
-import '../bloc/supplier/supplier_bloc.dart';
+import 'bloc/category/category_bloc.dart';
+import 'bloc/category/category_state.dart';
+import 'bloc/item/item_bloc.dart';
+import 'bloc/item/item_state.dart';
+import 'bloc/supplier/supplier_bloc.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -59,6 +63,34 @@ class HomePage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CategoryPage()),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.circle, color: AppColor.white),
+                          title: Text('Item',
+                              style: TextStyle(color: AppColor.white)),
+                          onTap: () {
+                            Navigator.pop(context); // Close the modal
+                            // Navigate to Categories Page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ItemPage()),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.man, color: AppColor.white),
+                          title: Text('Supplier',
+                              style: TextStyle(color: AppColor.white)),
+                          onTap: () {
+                            Navigator.pop(context); // Close the modal
+                            // Navigate to Categories Page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SupplierPage()),
                             );
                           },
                         ),
@@ -186,7 +218,7 @@ class HomePage extends StatelessWidget {
               BlocBuilder<ItemBloc, ItemState>(
                 builder: (context, state) {
                   if (state is ItemLoading) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (state is ItemLoaded) {
                     return HorizontalCard(
                       title: 'Barang',

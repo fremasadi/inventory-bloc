@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../../data/models/supplier.dart';
 import '../helper/helper.dart';
+import '../models/supplier.dart';
 
 class SupplierRepository {
   Future<List<Supplier>> fetchSuppliers() async {

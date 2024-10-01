@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constants/app_color.dart';
+import '../../../../constants/app_color.dart';
 
 class HorizontalCard extends StatelessWidget {
   const HorizontalCard({

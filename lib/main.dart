@@ -5,10 +5,12 @@ import 'app/core/repository/category_repository.dart';
 import 'app/core/repository/item_repository.dart';
 import 'app/core/repository/supplier_repository.dart';
 import 'app/presentation/bloc/category/category_bloc.dart';
+import 'app/presentation/bloc/category/category_event.dart';
 import 'app/presentation/bloc/item/item_bloc.dart';
+import 'app/presentation/bloc/item/item_event.dart';
 import 'app/presentation/bloc/supplier/supplier_bloc.dart';
 import 'app/presentation/constants/app_color.dart';
-import 'app/presentation/page/home_page.dart';
+import 'app/presentation/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +31,8 @@ class MyApp extends StatelessWidget {
                   CategoryBloc(CategoryRepository())..add(FetchCategory()),
             ),
             BlocProvider(
-              create: (context) => ItemBloc(ItemRepository())..add(FetchItem()),
+              create: (context) =>
+                  ItemBloc(ItemRepository())..add(FetchItems()),
             ),
             BlocProvider(
               create: (context) =>

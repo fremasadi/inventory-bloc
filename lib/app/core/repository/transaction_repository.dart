@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-import '../../data/models/transaction.dart';
 import '../helper/helper.dart';
+import '../models/transaction.dart';
 
 class TransactionRepository {
   Future<List<Transaction>> getTransactions() async {

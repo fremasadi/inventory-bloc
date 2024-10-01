@@ -1,5 +1,5 @@
 class Item {
-  final int id;
+  final int? id;
   final String namaBarang;
   final String deskripsi;
   final int stok;
@@ -8,7 +8,7 @@ class Item {
   final int supplierId;
 
   Item({
-    required this.id,
+    this.id,
     required this.namaBarang,
     required this.deskripsi,
     required this.stok,
